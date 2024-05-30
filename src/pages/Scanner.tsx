@@ -18,37 +18,27 @@ const Scanner: React.FC<ScannerProps> = ({ onDetected }) => {
           type: "LiveStream",
           constraints: {
             width: 640,
-            height: 320,
+            height: 480,
             facingMode: "environment",
           },
         },
         locator: {
+          patchSize: "medium",
           halfSample: true,
-          patchSize: "large", // x-small, small, medium, large, x-large
-          debug: {
-            showCanvas: true,
-            showPatches: false,
-            showFoundPatches: false,
-            showSkeleton: false,
-            showLabels: false,
-            showPatchLabels: false,
-            showRemainingPatchLabels: false,
-            boxFromPatches: {
-              showTransformed: true,
-              showTransformedBox: true,
-              showBB: true,
-            },
-          },
         },
-        numOfWorkers: 4,
+        numOfWorkers: navigator.hardwareConcurrency || 4,
         decoder: {
-          readers: ["code_128_reader"],
-          debug: {
-            drawBoundingBox: true,
-            showFrequency: true,
-            drawScanline: true,
-            showPattern: true,
-          },
+          readers: [
+            "code_128_reader",
+            "ean_reader",
+            "ean_8_reader",
+            "code_39_reader",
+            "code_39_vin_reader",
+            "codabar_reader",
+            "upc_reader",
+            "upc_e_reader",
+            "i2of5_reader",
+          ],
         },
         locate: true,
       },
@@ -63,6 +53,7 @@ const Scanner: React.FC<ScannerProps> = ({ onDetected }) => {
 
     return () => {
       Quagga.offDetected(_onDetected);
+      Quagga.stop();
     };
   }, []);
 
