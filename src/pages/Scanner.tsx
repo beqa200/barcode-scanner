@@ -1,4 +1,4 @@
-import { Component } from "react";
+import React, { useEffect } from "react";
 import Quagga from "@ericblade/quagga2";
 
 // Define the props type
@@ -6,8 +6,12 @@ interface ScannerProps {
   onDetected: (result: QuaggaJS.ResultObject) => void;
 }
 
-class Scanner extends Component<ScannerProps> {
-  componentDidMount() {
+const Scanner: React.FC<ScannerProps> = ({ onDetected }) => {
+  const _onDetected = (result: QuaggaJS.ResultObject) => {
+    onDetected(result);
+  };
+
+  useEffect(() => {
     Quagga.init(
       {
         inputStream: {
@@ -55,20 +59,14 @@ class Scanner extends Component<ScannerProps> {
         Quagga.start();
       }
     );
-    Quagga.onDetected(this._onDetected);
-  }
+    Quagga.onDetected(_onDetected);
 
-  componentWillUnmount() {
-    Quagga.offDetected(this._onDetected);
-  }
+    return () => {
+      Quagga.offDetected(_onDetected);
+    };
+  }, []);
 
-  _onDetected = (result: QuaggaJS.ResultObject) => {
-    this.props.onDetected(result);
-  };
-
-  render() {
-    return <div id="interactive" className="viewport" />;
-  }
-}
+  return <div id="interactive" className="viewport" />;
+};
 
 export default Scanner;
