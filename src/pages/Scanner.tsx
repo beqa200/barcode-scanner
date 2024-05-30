@@ -1,7 +1,12 @@
 import { Component } from "react";
 import Quagga from "@ericblade/quagga2";
 
-class Scanner extends Component {
+// Define the props type
+interface ScannerProps {
+  onDetected: (result: QuaggaJS.ResultObject) => void;
+}
+
+class Scanner extends Component<ScannerProps> {
   componentDidMount() {
     Quagga.init(
       {
@@ -12,12 +17,6 @@ class Scanner extends Component {
             height: 320,
             facingMode: "environment",
           },
-          //   area: { // defines rectangle of the detection/localization area
-          //     top: "10%",    // top offset
-          //     right: "10%",  // right offset
-          //     left: "10%",   // left offset
-          //     bottom: "10%"  // bottom offset
-          //   },
         },
         locator: {
           halfSample: true,
@@ -49,7 +48,7 @@ class Scanner extends Component {
         },
         locate: true,
       },
-      function (err) {
+      (err) => {
         if (err) {
           return console.log(err);
         }
@@ -63,7 +62,7 @@ class Scanner extends Component {
     Quagga.offDetected(this._onDetected);
   }
 
-  _onDetected = (result) => {
+  _onDetected = (result: QuaggaJS.ResultObject) => {
     this.props.onDetected(result);
   };
 

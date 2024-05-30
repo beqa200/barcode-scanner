@@ -1,38 +1,27 @@
-import React, { Component } from "react";
-
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import Scanner from "./Scanner";
 
-class BarcodeScanner extends Component {
-  state = {
-    results: [],
+const BarcodeScanner = () => {
+  //ts-ignore
+  const [results, setResults] = useState<any>([]);
+
+  //ts-ignore
+  const _onDetected = (result: any) => {
+    console.log("result", result[0]);
+    setResults([result]);
   };
 
-  _scan = () => {
-    this.setState({ scanning: !this.state.scanning });
-  };
+  return (
+    <div>
+      <Link to="/">back</Link>
+      <span>Barcode Scanner</span>
 
-  _onDetected = (result) => {
-    this.setState({ results: [] });
-    this.setState({ results: this.state.results.concat([result]) });
-  };
+      <Scanner onDetected={_onDetected} />
 
-  render() {
-    return (
-      <div>
-        <Link to="/">back</Link>
-        <span>Barcode Scanner</span>
-
-        <Scanner onDetected={this._onDetected} />
-
-        <p>
-          {this.state.results[0]
-            ? this.state.results[0].codeResult.code
-            : "No data scanned"}
-        </p>
-      </div>
-    );
-  }
-}
+      <p>{results[0] ? results[0].codeResult.code : "No data scanned"}</p>
+    </div>
+  );
+};
 
 export default BarcodeScanner;
