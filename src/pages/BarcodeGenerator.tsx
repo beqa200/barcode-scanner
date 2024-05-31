@@ -6,7 +6,9 @@ function BarcodeGenerator() {
   const [barcode, setBarcode] = useState<string>("lintangwisesa");
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setBarcode(event.target.value ? event.target.value : "");
+    const value = event.target.value;
+
+    setBarcode(value);
   };
 
   console.log(barcode);

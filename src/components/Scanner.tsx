@@ -28,7 +28,12 @@ const Scanner: React.FC<ScannerProps> = ({ onDetected }) => {
         },
         numOfWorkers: navigator.hardwareConcurrency || 4,
         decoder: {
-          readers: ["code_128_reader"],
+          readers: [
+            "code_128_reader",
+            "codabar_reader",
+            "upc_e_reader",
+            "ean_5_reader",
+          ],
         },
         locate: true,
       },
