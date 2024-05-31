@@ -32,7 +32,7 @@ function BarcodeGenerator() {
         />
       </div>
 
-      {<Generator barcode={barcode || "barcode"} />}
+      {barcode && <Generator barcode={barcode} />}
     </div>
   );
 }

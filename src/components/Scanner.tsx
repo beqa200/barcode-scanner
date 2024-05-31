@@ -42,8 +42,8 @@ const Scanner: React.FC<ScannerProps> = ({ onDetected }) => {
     Quagga.onDetected(_onDetected);
 
     return () => {
-      Quagga.offDetected(_onDetected);
       Quagga.stop();
+      Quagga.offDetected(_onDetected);
     };
   }, []);
 
