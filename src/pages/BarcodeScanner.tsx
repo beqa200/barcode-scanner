@@ -1,17 +1,22 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import Scanner from "./Scanner";
+import Scanner from "../components/Scanner";
+
+interface Result {
+  codeResult: {
+    code: string;
+  };
+}
 
 const BarcodeScanner = () => {
   //ts-ignore
-  const [results, setResults] = useState<any>([]);
+  const [results, setResults] = useState<Result[]>([]);
 
-  //ts-ignore
-  const _onDetected = (result: any) => {
-    console.log("result", result[0]);
-    setResults([result]);
+  const _onDetected = (result: QuaggaJS.ResultObject) => {
+    setResults([result as Result]);
   };
 
+  console.log(results);
   return (
     <div>
       <Link to="/">back</Link>

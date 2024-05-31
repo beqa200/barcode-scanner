@@ -18,7 +18,7 @@ const Scanner: React.FC<ScannerProps> = ({ onDetected }) => {
           type: "LiveStream",
           constraints: {
             width: 640,
-            height: 480,
+            height: 280,
             facingMode: "environment",
           },
         },
