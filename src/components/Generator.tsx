@@ -5,7 +5,9 @@ function Generator({ barcode }: { barcode: string }) {
     value: barcode,
     options: {
       background: "#ffffff",
+      
     },
+    
   });
 
   const downloadBarcode = () => {
